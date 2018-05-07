@@ -1,10 +1,29 @@
+require 'open-uri'
+require 'json'
+
 class CitiesController < ApplicationController
   before_action :set_city, only: [:show, :edit, :update, :destroy]
 
   # GET /cities
   # GET /cities.json
   def index
+    WeatherJob.perform_now(@weather)
     @cities = City.all
+    @weather = Weather.all
+    @hash = Gmaps4rails.build_markers(@cities) do |city, marker|
+      marker.lat city.latitude
+      marker.lng city.longitude
+      marker.infowindow city.address
+
+    
+
+    # @weather = Weather.create({temp: weather_city['main']['temp'],
+    #                             pressure: weather_city['main']['pressure'],
+    #                             humidity: weather_city['main']['humidity'],
+    #                             temp_min: weather_city['main']['temp_min'],
+    #                             temp_max: weather_city['main']['temp_max']
+    #                           })
+    end  
   end
 
   # GET /cities/1
@@ -25,7 +44,6 @@ class CitiesController < ApplicationController
   # POST /cities.json
   def create
     @city = City.new(city_params)
-
     respond_to do |format|
       if @city.save
         format.html { redirect_to @city, notice: 'City was successfully created.' }
@@ -69,6 +87,10 @@ class CitiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def city_params
-      params.require(:city).permit(:name, :latitude, :longtitude)
+      params.require(:city).permit(:address, :latitude, :longitude)
+    end
+
+    def weather_params
+      params.require(:weather).permit(:temp, :pressure, :humidity, :temp_min, :temp_max)
     end
 end

@@ -1,5 +1,9 @@
-<h1>New City</h1>
+<div class="page-header">
+  <%= link_to cities_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <h1>New city</h1>
+</div>
 
-<%= render 'form', city: @city %>
-
-<%= link_to 'Back', cities_path %>
+<%= render 'form' %>

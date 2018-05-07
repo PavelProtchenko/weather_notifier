@@ -1,32 +1,38 @@
-<%= form_with(model: city, local: true) do |form| %>
-  <% if city.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(city.errors.count, "error") %> prohibited this city from being saved:</h2>
+<%= form_for(@city, html: { class: "form-horizontal", role: "form" }) do |f| %>
+  <% if @city.errors.any? %>
+    <div class="alert alert-danger alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <h4><%= pluralize(@city.errors.count, "error") %> prohibited this city from being saved:</h4>
 
       <ul>
-      <% city.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+      <% @city.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name, id: :city_name %>
+  <div class="form-group">
+    <%= f.label 'City', class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :address, class: "form-control" %>
+    </div>
   </div>
-
-  <div class="field">
-    <%= form.label :latitude %>
-    <%= form.text_field :latitude, id: :city_latitude %>
+  <div class="form-group">
+    <%= f.label :latitude, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :latitude, class: "form-control" %>
+    </div>
   </div>
-
-  <div class="field">
-    <%= form.label :longtitude %>
-    <%= form.text_field :longtitude, id: :city_longtitude %>
+  <div class="form-group">
+    <%= f.label :longitude, class: "col-sm-2 control-label" %>
+    <div class="col-sm-10">
+      <%= f.text_field :longitude, class: "form-control" %>
+    </div>
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= f.submit class: "btn btn-primary" %>
+    </div>
   </div>
 <% end %>

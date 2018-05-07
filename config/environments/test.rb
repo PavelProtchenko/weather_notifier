@@ -37,6 +37,11 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  config.serve_static_files = true
+  config.assets.debug = true
+  config.assets_host = 'http://localhost:3000'
+  config.static_cache_control = 'public, max-age=3600'
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
